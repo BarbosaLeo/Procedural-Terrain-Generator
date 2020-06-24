@@ -15,7 +15,6 @@ public class TerrainChunk
 
     TreeSpawn treeSpawner;
     GameObject treeHolder;
-    GameObject treeMesh;
 
     MeshRenderer meshRenderer;
     MeshFilter meshFilter;
@@ -45,7 +44,6 @@ public class TerrainChunk
         this.heightMapSettings = heightMapSettings;
         this.meshSettings = meshSettings;
         this.viewer = viewer;
-        this.treeMesh = treeMesh;
 
         sampleCenter = coord * meshSettings.meshWorldSize / meshSettings.meshScale;
         Vector2 position = coord * meshSettings.meshWorldSize;
@@ -59,9 +57,15 @@ public class TerrainChunk
         meshCollider = meshObject.AddComponent<MeshCollider>();
         meshRenderer.material = material;
 
+        treeHolder = new GameObject("Tree Holder");
+        treeHolder.transform.parent = meshObject.transform;
+
         meshObject.transform.position = new Vector3(position.x, 0, position.y);
         meshObject.transform.parent = parent;
         SetVisible(false);
+
+        treeSpawner = treeHolder.AddComponent<TreeSpawn>();
+        treeSpawner.prefab = treeMesh;
 
         lodMeshes = new LODMesh[detailLevels.Length];
         for (int i = 0; i < detailLevels.Length; i++)

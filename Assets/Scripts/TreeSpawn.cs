@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.VersionControl;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class TreeSpawn : MonoBehaviour
 {
     TerrainGenerator terrain;
     public Vector2 castRegionSize = Vector2.one;
-    public float radius = 20;
+    public float radius = 30;
     public int rejectionSamples = 30;
     public float shoreStartHeight = 3f;
     public float mountainsStartHeight = 4f;
@@ -58,6 +54,7 @@ public class TreeSpawn : MonoBehaviour
             {
                 trees.Add(newPoint.point);
                 GameObject tree = Instantiate(prefab, newPoint.point, Quaternion.identity);
+                tree.transform.parent = transform;
             }
         }
         else
